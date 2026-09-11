@@ -47,7 +47,7 @@ class BannerAdView @JvmOverloads constructor(
 
     private var adView: AdView? = null
     private var bannerSize: BannerAdSize = BannerAdSize.ADAPTIVE
-    private var isAutoLoad: Boolean = true
+    private var isAutoLoad: Boolean = false
     private var isCollapsible: Boolean = false
     private var customAdUnitId: String? = null
     private var isAdLoaded: Boolean = false
@@ -77,7 +77,7 @@ class BannerAdView @JvmOverloads constructor(
                     3 -> BannerAdSize.MEDIUM_RECTANGLE
                     else -> BannerAdSize.ADAPTIVE
                 }
-                isAutoLoad = typedArray.getBoolean(R.styleable.BannerAdView_autoLoadBanner, true)
+                isAutoLoad = typedArray.getBoolean(R.styleable.BannerAdView_autoLoadBanner, false)
                 isCollapsible = typedArray.getBoolean(R.styleable.BannerAdView_collapsibleBanner, false)
             } finally {
                 typedArray.recycle()
@@ -191,8 +191,8 @@ class BannerAdView @JvmOverloads constructor(
                 isAdLoaded = true
                 visibility = View.VISIBLE
                 onAdLoadedListener?.invoke()
-                // Automatically preload next backup banner in background
-                if (config != null && !isCollapsible) {
+                // Automatically preload next backup banner in background if configured
+                if (config != null && !isCollapsible && config.autoReplenishBanner) {
                     BannerPreloadCache.preloadBanner(context, config, bannerSize)
                 }
             }

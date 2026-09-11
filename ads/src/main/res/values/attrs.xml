@@ -15,6 +15,7 @@
         <attr name="nativeTemplate" format="enum">
             <enum name="small" value="0" />
             <enum name="medium" value="1" />
+            <enum name="big" value="2" />
         </attr>
         <attr name="autoLoadNative" format="boolean" />
     </declare-styleable>

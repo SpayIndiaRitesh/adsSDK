@@ -17,5 +17,9 @@ sealed class NativeAdTemplate {
         override val layoutResId: Int = R.layout.layout_native_ad_medium
     }
 
+    object Big : NativeAdTemplate() {
+        override val layoutResId: Int = R.layout.layout_native_ad_big
+    }
+
     data class Custom(@get:LayoutRes override val layoutResId: Int) : NativeAdTemplate()
 }

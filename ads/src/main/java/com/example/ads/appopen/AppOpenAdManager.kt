@@ -249,8 +249,10 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks, DefaultLifecycl
                 isShowingAd = false
                 AdsManager.isFullScreenAdShowing = false
                 lastDismissedTimestampMillis = System.currentTimeMillis()
-                // Automatically pre-load next ad in background
-                loadAppOpenAd(activity, config)
+                // Automatically pre-load next ad in background if configured
+                if (config.autoReplenishAppOpen) {
+                    loadAppOpenAd(activity, config)
+                }
                 onDismissed?.invoke()
             }
 
@@ -262,8 +264,10 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks, DefaultLifecycl
                 cachedAppOpenAd = null
                 isShowingAd = false
                 AdsManager.isFullScreenAdShowing = false
-                // Pre-load next ad
-                loadAppOpenAd(activity, config)
+                // Pre-load next ad if configured
+                if (config.autoReplenishAppOpen) {
+                    loadAppOpenAd(activity, config)
+                }
                 onFailed?.invoke(
                     AdsError.ShowFailed("AppOpen", adError.code, adError.message)
                 )

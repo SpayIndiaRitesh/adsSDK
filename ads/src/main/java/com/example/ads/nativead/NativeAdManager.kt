@@ -108,8 +108,10 @@ class NativeAdManager {
         val ad = preloadedNativeAd
         if (ad != null) {
             preloadedNativeAd = null
-            // Automatically pre-load next backup native ad in the background
-            preloadNativeAd(context, config)
+            if (config.autoReplenishNative) {
+                // Automatically pre-load next backup native ad in the background
+                preloadNativeAd(context, config)
+            }
             return ad
         }
         return null
@@ -161,8 +163,10 @@ class NativeAdManager {
                 currentNativeAd?.destroy()
                 currentNativeAd = nativeAd
                 onLoaded(nativeAd)
-                // Automatically pre-load next backup native ad in background
-                preloadNativeAd(context, config)
+                if (config.preloadNative) {
+                    // Automatically pre-load next backup native ad in background
+                    preloadNativeAd(context, config)
+                }
             }
             .withAdListener(object : AdListener() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
@@ -197,7 +201,7 @@ class NativeAdManager {
     fun populateNativeAdView(nativeAd: NativeAd, nativeAdView: NativeAdView) {
         val headlineView = nativeAdView.findViewById<TextView>(R.id.ad_headline)
         val bodyView = nativeAdView.findViewById<TextView>(R.id.ad_body)
-        val callToActionView = nativeAdView.findViewById<Button>(R.id.ad_call_to_action)
+        val callToActionView = nativeAdView.findViewById<View>(R.id.ad_call_to_action)
         val iconView = nativeAdView.findViewById<ImageView>(R.id.ad_app_icon)
         val starsView = nativeAdView.findViewById<RatingBar>(R.id.ad_stars)
         val advertiserView = nativeAdView.findViewById<TextView>(R.id.ad_advertiser)
@@ -222,7 +226,9 @@ class NativeAdManager {
         // Call to action button
         if (callToActionView != null) {
             nativeAdView.callToActionView = callToActionView
-            callToActionView.text = nativeAd.callToAction
+            if (callToActionView is TextView) {
+                callToActionView.text = nativeAd.callToAction
+            }
             callToActionView.visibility = if (nativeAd.callToAction.isNullOrEmpty()) View.GONE else View.VISIBLE
         }
 

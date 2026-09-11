@@ -31,9 +31,9 @@ class NativeAdViewContainer @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val nativeAdManager = NativeAdManager()
+    private val nativeAdManager get() = AdsManager.nativeManager
     private var template: NativeAdTemplate = NativeAdTemplate.Medium
-    private var isAutoLoad: Boolean = true
+    private var isAutoLoad: Boolean = false
     private var shimmerView: View? = null
     private var nativeAdView: NativeAdView? = null
     private var isAdLoaded = false
@@ -49,9 +49,10 @@ class NativeAdViewContainer @JvmOverloads constructor(
                 template = when (templateIndex) {
                     0 -> NativeAdTemplate.Small
                     1 -> NativeAdTemplate.Medium
+                    2 -> NativeAdTemplate.Big
                     else -> NativeAdTemplate.Medium
                 }
-                isAutoLoad = typedArray.getBoolean(R.styleable.NativeAdViewContainer_autoLoadNative, true)
+                isAutoLoad = typedArray.getBoolean(R.styleable.NativeAdViewContainer_autoLoadNative, false)
             } finally {
                 typedArray.recycle()
             }
@@ -61,7 +62,7 @@ class NativeAdViewContainer @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (isAutoLoad && !isAdLoaded) {
-            post { loadAd() }
+            loadAd()
         }
     }
 
@@ -157,7 +158,6 @@ class NativeAdViewContainer @JvmOverloads constructor(
 
     fun destroy() {
         try {
-            nativeAdManager.destroy()
             nativeAdView?.destroy()
             nativeAdView = null
             removeAllViews()

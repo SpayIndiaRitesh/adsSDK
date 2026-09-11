@@ -33,18 +33,15 @@ class MainActivity : AppCompatActivity() {
 
         // 2. Interstitial Screen Transition
         binding.btnFlowInterstitial.setOnClickListener {
-            AdsManager.showInterstitial(this) {}
+            AdsManager.showInterstitial(this) {
+
+
+            }
         }
 
         // 3. Native Ads Flow
         binding.btnFlowNative.setOnClickListener {
-            AdsLogger.i(
-                AdsLogger.TAG_NATIVE,
-                "MainActivity: User clicked 'Native Ads Flow'"
-            )
-            val intent = Intent(this, NativeAdFlowActivity::class.java).apply {
-                putExtra(NativeAdFlowActivity.EXTRA_LEVEL, 1)
-            }
+            val intent = Intent(this, NativeAdFlowActivity::class.java)
             startActivity(intent)
         }
 

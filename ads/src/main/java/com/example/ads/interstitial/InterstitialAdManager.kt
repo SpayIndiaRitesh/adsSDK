@@ -200,7 +200,7 @@ class InterstitialAdManager {
                 AdsLogger.i(AdsLogger.TAG_INTERSTITIAL, "Interstitial dismissed by user. Continuing app flow.")
                 interstitialAd = null
                 AdsManager.isFullScreenAdShowing = false
-                if (config.preloadInterstitial) {
+                if (config.autoReplenishInterstitial) {
                     loadInterstitial(activity, config)
                 }
                 onComplete()
@@ -211,7 +211,7 @@ class InterstitialAdManager {
                 loadingDialog?.dismiss()
                 interstitialAd = null
                 AdsManager.isFullScreenAdShowing = false
-                if (config.preloadInterstitial) {
+                if (config.autoReplenishInterstitial) {
                     loadInterstitial(activity, config)
                 }
                 onComplete()

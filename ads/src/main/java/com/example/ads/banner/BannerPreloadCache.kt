@@ -90,8 +90,10 @@ object BannerPreloadCache {
             AdsLogger.i(logTag, "Consuming preloaded banner for size: $bannerSize")
             // Detach from previous parent if any
             (adView.parent as? ViewGroup)?.removeView(adView)
-            // Replenish backup banner in background for next screen
-            preloadBanner(context, config, bannerSize)
+            // Replenish backup banner in background for next screen if configured
+            if (config.autoReplenishBanner) {
+                preloadBanner(context, config, bannerSize)
+            }
             return adView
         }
         return null

@@ -192,8 +192,8 @@ class RewardedAdManager {
                 AdsLogger.i(AdsLogger.TAG_REWARDED, "Rewarded ad dismissed. Reward granted: $rewardGranted")
                 rewardedAd = null
                 AdsManager.isFullScreenAdShowing = false
-                // Auto pre-load next ad ONLY if preloadRewarded is enabled in config
-                if (config.preloadRewarded) {
+                // Auto pre-load next ad ONLY if autoReplenishRewarded is enabled in config
+                if (config.autoReplenishRewarded) {
                     loadRewarded(activity, config)
                 }
                 onComplete(rewardGranted)
@@ -203,7 +203,7 @@ class RewardedAdManager {
                 AdsLogger.e(AdsLogger.TAG_REWARDED, "Failed to show rewarded ad [code: ${adError.code}]: ${adError.message}")
                 rewardedAd = null
                 AdsManager.isFullScreenAdShowing = false
-                if (config.preloadRewarded) {
+                if (config.autoReplenishRewarded) {
                     loadRewarded(activity, config)
                 }
                 onComplete(false)

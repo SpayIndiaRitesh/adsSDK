@@ -25,15 +25,33 @@ object AdsRemoteConfigManager {
     const val KEY_NATIVE_AD_UNIT_ID = "native_ad_unit_id"
     const val KEY_APP_OPEN_AD_UNIT_ID = "app_open_ad_unit_id"
 
+    // 1. BANNER KEYS
     const val KEY_ENABLE_BANNER = "enable_banner_ads"
-    const val KEY_ENABLE_INTERSTITIAL = "enable_interstitial_ads"
-    const val KEY_PRELOAD_INTERSTITIAL = "preload_interstitial_ads"
-    const val KEY_ENABLE_REWARDED = "enable_rewarded_ads"
-    const val KEY_PRELOAD_REWARDED = "preload_rewarded_ads"
-    const val KEY_ENABLE_REWARDED_INTERSTITIAL = "enable_rewarded_interstitial_ads"
-    const val KEY_ENABLE_NATIVE = "enable_native_ads"
-    const val KEY_ENABLE_APP_OPEN = "enable_app_open_ads"
+    const val KEY_PRELOAD_BANNER_ON_START = "preload_banner_on_start"
+    const val KEY_AUTO_REPLENISH_BANNER = "auto_replenish_banner"
 
+    // 2. INTERSTITIAL KEYS
+    const val KEY_ENABLE_INTERSTITIAL = "enable_interstitial_ads"
+    const val KEY_PRELOAD_INTERSTITIAL_ON_START = "preload_interstitial_on_start"
+    const val KEY_AUTO_REPLENISH_INTERSTITIAL = "auto_replenish_interstitial"
+
+    // 3. APP OPEN KEYS
+    const val KEY_ENABLE_APP_OPEN = "enable_app_open_ads"
+    const val KEY_PRELOAD_APP_OPEN_ON_START = "preload_app_open_on_start"
+    const val KEY_AUTO_REPLENISH_APP_OPEN = "auto_replenish_app_open"
+
+    // 4. NATIVE KEYS
+    const val KEY_ENABLE_NATIVE = "enable_native_ads"
+    const val KEY_PRELOAD_NATIVE_ON_START = "preload_native_on_start"
+    const val KEY_AUTO_REPLENISH_NATIVE = "auto_replenish_native"
+
+    // 5. REWARDED KEYS
+    const val KEY_ENABLE_REWARDED = "enable_rewarded_ads"
+    const val KEY_PRELOAD_REWARDED_ON_START = "preload_rewarded_on_start"
+    const val KEY_AUTO_REPLENISH_REWARDED = "auto_replenish_rewarded"
+
+    // OTHER KEYS
+    const val KEY_ENABLE_REWARDED_INTERSTITIAL = "enable_rewarded_interstitial_ads"
     const val KEY_USE_TEST_ADS = "use_test_ads"
     const val KEY_ENABLE_LOGGING = "enable_ads_logging"
     const val KEY_INTERSTITIAL_FREQUENCY = "interstitial_frequency"
@@ -121,14 +139,35 @@ object AdsRemoteConfigManager {
         val nativeId = remoteConfig.getString(KEY_NATIVE_AD_UNIT_ID)
         val appOpenId = remoteConfig.getString(KEY_APP_OPEN_AD_UNIT_ID)
 
+        // Banner
         val enableBanner = remoteConfig.getBoolean(KEY_ENABLE_BANNER)
+        val preloadBannerOnStart = remoteConfig.getBoolean(KEY_PRELOAD_BANNER_ON_START)
+        val autoReplenishBanner = remoteConfig.getBoolean(KEY_AUTO_REPLENISH_BANNER)
+
+        // Interstitial
         val enableInterstitial = remoteConfig.getBoolean(KEY_ENABLE_INTERSTITIAL)
-        val preloadInterstitial = remoteConfig.getBoolean(KEY_PRELOAD_INTERSTITIAL)
-        val enableRewarded = remoteConfig.getBoolean(KEY_ENABLE_REWARDED)
-        val preloadRewarded = remoteConfig.getBoolean(KEY_PRELOAD_REWARDED)
-        val enableRewardedInterstitial = remoteConfig.getBoolean(KEY_ENABLE_REWARDED_INTERSTITIAL)
-        val enableNative = remoteConfig.getBoolean(KEY_ENABLE_NATIVE)
+        val preloadInterstitialOnStart = remoteConfig.getBoolean(KEY_PRELOAD_INTERSTITIAL_ON_START)
+            || remoteConfig.getBoolean("preload_interstitial_ads")
+        val autoReplenishInterstitial = remoteConfig.getBoolean(KEY_AUTO_REPLENISH_INTERSTITIAL)
+
+        // App Open
         val enableAppOpen = remoteConfig.getBoolean(KEY_ENABLE_APP_OPEN)
+        val preloadAppOpenOnStart = remoteConfig.getBoolean(KEY_PRELOAD_APP_OPEN_ON_START)
+        val autoReplenishAppOpen = remoteConfig.getBoolean(KEY_AUTO_REPLENISH_APP_OPEN)
+
+        // Native
+        val enableNative = remoteConfig.getBoolean(KEY_ENABLE_NATIVE)
+        val preloadNativeOnStart = remoteConfig.getBoolean(KEY_PRELOAD_NATIVE_ON_START)
+            || remoteConfig.getBoolean("preload_native_ads")
+        val autoReplenishNative = remoteConfig.getBoolean(KEY_AUTO_REPLENISH_NATIVE)
+
+        // Rewarded
+        val enableRewarded = remoteConfig.getBoolean(KEY_ENABLE_REWARDED)
+        val preloadRewardedOnStart = remoteConfig.getBoolean(KEY_PRELOAD_REWARDED_ON_START)
+            || remoteConfig.getBoolean("preload_rewarded_ads")
+        val autoReplenishRewarded = remoteConfig.getBoolean(KEY_AUTO_REPLENISH_REWARDED)
+
+        val enableRewardedInterstitial = remoteConfig.getBoolean(KEY_ENABLE_REWARDED_INTERSTITIAL)
 
         val useTestAds = remoteConfig.getBoolean(KEY_USE_TEST_ADS)
         val enableLogging = remoteConfig.getBoolean(KEY_ENABLE_LOGGING)
@@ -140,7 +179,7 @@ object AdsRemoteConfigManager {
 
         AdsLogger.i(
             AdsLogger.TAG_REMOTE_CONFIG,
-            "Remote Config Parsed | enableLogging=$enableLogging | useTestAds=$useTestAds | Interstitial(enabled=$enableInterstitial, preload=$preloadInterstitial, ID=$interstitialId) | Banner(enabled=$enableBanner, ID=$bannerId) | Native(enabled=$enableNative, ID=$nativeId) | Rewarded(enabled=$enableRewarded, preload=$preloadRewarded, ID=$rewardedId)"
+            "Remote Config Parsed | enableLogging=$enableLogging | useTestAds=$useTestAds | Banner(enable=$enableBanner, start=$preloadBannerOnStart, replenish=$autoReplenishBanner) | Interstitial(enable=$enableInterstitial, start=$preloadInterstitialOnStart, replenish=$autoReplenishInterstitial) | AppOpen(enable=$enableAppOpen, start=$preloadAppOpenOnStart, replenish=$autoReplenishAppOpen) | Native(enable=$enableNative, start=$preloadNativeOnStart, replenish=$autoReplenishNative) | Rewarded(enable=$enableRewarded, start=$preloadRewardedOnStart, replenish=$autoReplenishRewarded)"
         )
 
         return AdsConfig(
@@ -151,13 +190,21 @@ object AdsRemoteConfigManager {
             nativeAdUnitId = nativeId,
             appOpenAdUnitId = appOpenId,
             enableBanner = enableBanner,
+            preloadBannerOnStart = preloadBannerOnStart,
+            autoReplenishBanner = autoReplenishBanner,
             enableInterstitial = enableInterstitial,
-            preloadInterstitial = preloadInterstitial,
-            enableRewarded = enableRewarded,
-            preloadRewarded = preloadRewarded,
-            enableRewardedInterstitial = enableRewardedInterstitial,
-            enableNative = enableNative,
+            preloadInterstitialOnStart = preloadInterstitialOnStart,
+            autoReplenishInterstitial = autoReplenishInterstitial,
             enableAppOpen = enableAppOpen,
+            preloadAppOpenOnStart = preloadAppOpenOnStart,
+            autoReplenishAppOpen = autoReplenishAppOpen,
+            enableNative = enableNative,
+            preloadNativeOnStart = preloadNativeOnStart,
+            autoReplenishNative = autoReplenishNative,
+            enableRewarded = enableRewarded,
+            preloadRewardedOnStart = preloadRewardedOnStart,
+            autoReplenishRewarded = autoReplenishRewarded,
+            enableRewardedInterstitial = enableRewardedInterstitial,
             useTestAds = useTestAds,
             enableLogging = enableLogging,
             interstitialFrequency = frequency,

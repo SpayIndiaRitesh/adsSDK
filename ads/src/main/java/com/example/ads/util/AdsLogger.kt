@@ -26,6 +26,7 @@ object AdsLogger {
 
     fun d(message: String) = d(TAG_CORE, message)
     fun d(tag: String, message: String) {
+        if (!isLoggingEnabled) return
         val logLine = "[$tag] 🔹 $message"
         try {
             Log.d(tag, logLine)
@@ -38,6 +39,7 @@ object AdsLogger {
 
     fun i(message: String) = i(TAG_CORE, message)
     fun i(tag: String, message: String) {
+        if (!isLoggingEnabled) return
         val logLine = "[$tag] ℹ️ $message"
         try {
             Log.i(tag, logLine)
@@ -49,6 +51,7 @@ object AdsLogger {
 
     fun w(message: String) = w(TAG_CORE, message)
     fun w(tag: String, message: String) {
+        if (!isLoggingEnabled) return
         val logLine = "[$tag] ⚠️ $message"
         try {
             Log.w(tag, logLine)
@@ -60,6 +63,7 @@ object AdsLogger {
 
     fun e(message: String, throwable: Throwable? = null) = e(TAG_CORE, message, throwable)
     fun e(tag: String, message: String, throwable: Throwable? = null) {
+        if (!isLoggingEnabled) return
         val logLine = "[$tag] ❌ $message"
         try {
             if (throwable != null) {

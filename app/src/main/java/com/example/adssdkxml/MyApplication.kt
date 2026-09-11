@@ -11,7 +11,6 @@ import com.example.adssdkxml.restricted.RestrictedActivity
  * Host Application demonstrating centralized Google AdMob Ads SDK initialization.
  */
 class MyApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
 

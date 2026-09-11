@@ -126,26 +126,26 @@ object AdsManager {
                 }
                 AdsLogger.i(AdsLogger.TAG_CORE, "Google Mobile Ads SDK initialized successfully.")
 
-                // Pre-load all enabled ad formats in advance for instant 0ms presentation
+                // Pre-load enabled ad formats in advance if configured for start preload
                 if (isAdsEnabled) {
-                    if (config.enableInterstitial && config.preloadInterstitial) {
-                        interstitialManager.loadInterstitial(context.applicationContext, config)
-                    }
-                    if (config.enableRewarded && config.preloadRewarded) {
-                        rewardedManager.loadRewarded(context.applicationContext, config)
-                    }
-                    if (config.enableRewardedInterstitial) {
-                        rewardedInterstitialManager.loadRewardedInterstitial(context.applicationContext, config)
-                    }
-                    if (config.enableAppOpen) {
-                        appOpenManager.loadAd(context.applicationContext, config)
-                    }
-                    if (config.enableNative) {
-                        nativeManager.preloadNativeAd(context.applicationContext, config)
-                    }
-                    if (config.enableBanner) {
+                    if (config.enableBanner && config.preloadBannerOnStart) {
                         BannerPreloadCache.preloadBanner(context.applicationContext, config, BannerAdSize.ADAPTIVE)
                         BannerPreloadCache.preloadBanner(context.applicationContext, config, BannerAdSize.MEDIUM_RECTANGLE)
+                    }
+                    if (config.enableInterstitial && config.preloadInterstitialOnStart) {
+                        interstitialManager.loadInterstitial(context.applicationContext, config)
+                    }
+                    if (config.enableAppOpen && config.preloadAppOpenOnStart) {
+                        appOpenManager.loadAd(context.applicationContext, config)
+                    }
+                    if (config.enableNative && config.preloadNativeOnStart) {
+                        nativeManager.preloadNativeAd(context.applicationContext, config)
+                    }
+                    if (config.enableRewarded && config.preloadRewardedOnStart) {
+                        rewardedManager.loadRewarded(context.applicationContext, config)
+                    }
+                    if (config.enableRewardedInterstitial && config.preloadRewardedInterstitial) {
+                        rewardedInterstitialManager.loadRewardedInterstitial(context.applicationContext, config)
                     }
                 }
 

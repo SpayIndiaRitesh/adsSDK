@@ -34,13 +34,30 @@
             android:layout_marginTop="12dp"
             android:text="Reload Native Ads" />
 
-        <!-- Medium Native Ad (with MediaView) -->
+        <!-- Big Native Ad (Dark Theme Hero Layout matching reference) -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:text="1. Medium Native Ad (Headline, Body, Media, CTA, Rating):"
+            android:text="1. Big Native Ad (Dark Theme Hero Layout matching screenshot):"
+            android:textColor="#202124"
+            android:textStyle="bold" />
+
+        <com.example.ads.nativead.NativeAdViewContainer
+            android:id="@+id/native_ad_big"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:autoLoadNative="true"
+            app:nativeTemplate="big" />
+
+        <!-- Medium Native Ad (with MediaView) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
+            android:text="2. Medium Native Ad (Headline, Body, Media, CTA, Rating):"
             android:textColor="#202124"
             android:textStyle="bold" />
 
@@ -57,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
-            android:text="2. Small Native Ad (Compact Row Layout):"
+            android:text="3. Small Native Ad (Compact Row Layout):"
             android:textColor="#202124"
             android:textStyle="bold" />
 

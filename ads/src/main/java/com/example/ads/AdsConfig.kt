@@ -5,8 +5,10 @@ import com.example.ads.util.AdMobTestIds
 /**
  * Central configuration data class for the Google AdMob Ads SDK.
  *
- * Designed to be reusable across multiple Android applications without hardcoding App IDs
- * or production Ad Unit IDs into the library codebase.
+ * Provides a 3-flag control system for each of the 5 ad formats:
+ * 1. enable[Format] : Active or Enabled status.
+ * 2. preload[Format]OnStart : Preload ad after Splash / on SDK initialization.
+ * 3. autoReplenish[Format] : Auto-preload next backup ad after impression/dismissal.
  */
 data class AdsConfig(
     val bannerAdUnitId: String = "",
@@ -16,15 +18,33 @@ data class AdsConfig(
     val nativeAdUnitId: String = "",
     val appOpenAdUnitId: String = "",
 
+    // 1. BANNER FLAGS
     val enableBanner: Boolean = true,
-    val enableInterstitial: Boolean = true,
-    val enableRewarded: Boolean = true,
-    val enableRewardedInterstitial: Boolean = true,
-    val enableNative: Boolean = true,
-    val enableAppOpen: Boolean = true,
+    val preloadBannerOnStart: Boolean = false,
+    val autoReplenishBanner: Boolean = false,
 
-    val preloadInterstitial: Boolean = false,
-    val preloadRewarded: Boolean = false,
+    // 2. INTERSTITIAL FLAGS
+    val enableInterstitial: Boolean = true,
+    val preloadInterstitialOnStart: Boolean = false,
+    val autoReplenishInterstitial: Boolean = false,
+
+    // 3. APP OPEN FLAGS
+    val enableAppOpen: Boolean = true,
+    val preloadAppOpenOnStart: Boolean = false,
+    val autoReplenishAppOpen: Boolean = false,
+
+    // 4. NATIVE FLAGS
+    val enableNative: Boolean = true,
+    val preloadNativeOnStart: Boolean = false,
+    val autoReplenishNative: Boolean = false,
+
+    // 5. REWARDED FLAGS
+    val enableRewarded: Boolean = true,
+    val preloadRewardedOnStart: Boolean = false,
+    val autoReplenishRewarded: Boolean = false,
+
+    // REWARDED INTERSTITIAL & OTHER OPTIONS
+    val enableRewardedInterstitial: Boolean = true,
     val preloadRewardedInterstitial: Boolean = false,
 
     val useTestAds: Boolean = false,
@@ -40,6 +60,10 @@ data class AdsConfig(
     val maxAdContentRating: String? = null,
     val allowRewardedForPremium: Boolean = true
 ) {
+    // Backwards compatibility aliases
+    val preloadInterstitial: Boolean get() = preloadInterstitialOnStart
+    val preloadNative: Boolean get() = preloadNativeOnStart
+    val preloadRewarded: Boolean get() = preloadRewardedOnStart
 
     /**
      * Resolves the effective Banner Ad Unit ID based on the test-ads configuration.
@@ -116,14 +140,26 @@ data class AdsConfig(
         private var appOpenAdUnitId: String = ""
 
         private var enableBanner: Boolean = true
-        private var enableInterstitial: Boolean = true
-        private var enableRewarded: Boolean = true
-        private var enableRewardedInterstitial: Boolean = true
-        private var enableNative: Boolean = true
-        private var enableAppOpen: Boolean = true
+        private var preloadBannerOnStart: Boolean = false
+        private var autoReplenishBanner: Boolean = false
 
-        private var preloadInterstitial: Boolean = false
-        private var preloadRewarded: Boolean = false
+        private var enableInterstitial: Boolean = true
+        private var preloadInterstitialOnStart: Boolean = false
+        private var autoReplenishInterstitial: Boolean = false
+
+        private var enableAppOpen: Boolean = true
+        private var preloadAppOpenOnStart: Boolean = false
+        private var autoReplenishAppOpen: Boolean = false
+
+        private var enableNative: Boolean = true
+        private var preloadNativeOnStart: Boolean = false
+        private var autoReplenishNative: Boolean = false
+
+        private var enableRewarded: Boolean = true
+        private var preloadRewardedOnStart: Boolean = false
+        private var autoReplenishRewarded: Boolean = false
+
+        private var enableRewardedInterstitial: Boolean = true
         private var preloadRewardedInterstitial: Boolean = false
 
         private var useTestAds: Boolean = false
@@ -146,15 +182,36 @@ data class AdsConfig(
         fun setNativeAdUnitId(id: String) = apply { this.nativeAdUnitId = id }
         fun setAppOpenAdUnitId(id: String) = apply { this.appOpenAdUnitId = id }
 
+        // Banner
         fun setEnableBanner(enable: Boolean) = apply { this.enableBanner = enable }
-        fun setEnableInterstitial(enable: Boolean) = apply { this.enableInterstitial = enable }
-        fun setEnableRewarded(enable: Boolean) = apply { this.enableRewarded = enable }
-        fun setEnableRewardedInterstitial(enable: Boolean) = apply { this.enableRewardedInterstitial = enable }
-        fun setEnableNative(enable: Boolean) = apply { this.enableNative = enable }
-        fun setEnableAppOpen(enable: Boolean) = apply { this.enableAppOpen = enable }
+        fun setPreloadBannerOnStart(preload: Boolean) = apply { this.preloadBannerOnStart = preload }
+        fun setAutoReplenishBanner(replenish: Boolean) = apply { this.autoReplenishBanner = replenish }
 
-        fun setPreloadInterstitial(preload: Boolean) = apply { this.preloadInterstitial = preload }
-        fun setPreloadRewarded(preload: Boolean) = apply { this.preloadRewarded = preload }
+        // Interstitial
+        fun setEnableInterstitial(enable: Boolean) = apply { this.enableInterstitial = enable }
+        fun setPreloadInterstitialOnStart(preload: Boolean) = apply { this.preloadInterstitialOnStart = preload }
+        fun setAutoReplenishInterstitial(replenish: Boolean) = apply { this.autoReplenishInterstitial = replenish }
+        fun setPreloadInterstitial(preload: Boolean) = apply { this.preloadInterstitialOnStart = preload }
+
+        // App Open
+        fun setEnableAppOpen(enable: Boolean) = apply { this.enableAppOpen = enable }
+        fun setPreloadAppOpenOnStart(preload: Boolean) = apply { this.preloadAppOpenOnStart = preload }
+        fun setAutoReplenishAppOpen(replenish: Boolean) = apply { this.autoReplenishAppOpen = replenish }
+
+        // Native
+        fun setEnableNative(enable: Boolean) = apply { this.enableNative = enable }
+        fun setPreloadNativeOnStart(preload: Boolean) = apply { this.preloadNativeOnStart = preload }
+        fun setAutoReplenishNative(replenish: Boolean) = apply { this.autoReplenishNative = replenish }
+        fun setPreloadNative(preload: Boolean) = apply { this.preloadNativeOnStart = preload }
+
+        // Rewarded
+        fun setEnableRewarded(enable: Boolean) = apply { this.enableRewarded = enable }
+        fun setPreloadRewardedOnStart(preload: Boolean) = apply { this.preloadRewardedOnStart = preload }
+        fun setAutoReplenishRewarded(replenish: Boolean) = apply { this.autoReplenishRewarded = replenish }
+        fun setPreloadRewarded(preload: Boolean) = apply { this.preloadRewardedOnStart = preload }
+
+        // Rewarded Interstitial
+        fun setEnableRewardedInterstitial(enable: Boolean) = apply { this.enableRewardedInterstitial = enable }
         fun setPreloadRewardedInterstitial(preload: Boolean) = apply { this.preloadRewardedInterstitial = preload }
 
         fun setUseTestAds(useTest: Boolean) = apply { this.useTestAds = useTest }
@@ -178,13 +235,21 @@ data class AdsConfig(
             nativeAdUnitId = nativeAdUnitId,
             appOpenAdUnitId = appOpenAdUnitId,
             enableBanner = enableBanner,
+            preloadBannerOnStart = preloadBannerOnStart,
+            autoReplenishBanner = autoReplenishBanner,
             enableInterstitial = enableInterstitial,
-            enableRewarded = enableRewarded,
-            enableRewardedInterstitial = enableRewardedInterstitial,
-            enableNative = enableNative,
+            preloadInterstitialOnStart = preloadInterstitialOnStart,
+            autoReplenishInterstitial = autoReplenishInterstitial,
             enableAppOpen = enableAppOpen,
-            preloadInterstitial = preloadInterstitial,
-            preloadRewarded = preloadRewarded,
+            preloadAppOpenOnStart = preloadAppOpenOnStart,
+            autoReplenishAppOpen = autoReplenishAppOpen,
+            enableNative = enableNative,
+            preloadNativeOnStart = preloadNativeOnStart,
+            autoReplenishNative = autoReplenishNative,
+            enableRewarded = enableRewarded,
+            preloadRewardedOnStart = preloadRewardedOnStart,
+            autoReplenishRewarded = autoReplenishRewarded,
+            enableRewardedInterstitial = enableRewardedInterstitial,
             preloadRewardedInterstitial = preloadRewardedInterstitial,
             useTestAds = useTestAds,
             enableLogging = enableLogging,

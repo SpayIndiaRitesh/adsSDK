@@ -16,8 +16,6 @@ class MediumRectangleFlowActivity : AppCompatActivity() {
         binding = ActivityMediumRectangleFlowBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        AdsManager.showBannerAd(binding.bannerAdMrecFlow, BannerAdSize.LARGE_BANNER)
-
+        AdsManager.showBannerAd(binding.bannerAdMrecFlow, BannerAdSize.MEDIUM_RECTANGLE)
     }
 }
