@@ -57,6 +57,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
 
+    // Firebase Remote Config
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.config)
+
     // Google Mobile Ads & User Messaging Platform (UMP)
     api(libs.play.services.ads)
     api(libs.user.messaging.platform)

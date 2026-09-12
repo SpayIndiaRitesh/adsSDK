@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.ads.AdsConfig
 import com.example.ads.AdsManager
 import com.example.ads.util.AdsLogger
-import com.example.adssdkxml.config.AdsRemoteConfigManager
+import com.example.ads.config.AdsRemoteConfigManager
 import com.example.adssdkxml.restricted.RestrictedActivity
 
 /**

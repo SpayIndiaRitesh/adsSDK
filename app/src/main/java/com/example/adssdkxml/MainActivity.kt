@@ -8,7 +8,7 @@ import com.example.ads.AdsManager
 import com.example.ads.util.AdsLogger
 import com.example.adssdkxml.banner.ComposeMediumRectangleActivity
 import com.example.adssdkxml.banner.MediumRectangleFlowActivity
-import com.example.adssdkxml.config.AdsRemoteConfigManager
+import com.example.ads.config.AdsRemoteConfigManager
 import com.example.adssdkxml.databinding.ActivityMainBinding
 import com.example.adssdkxml.nativead.NativeAdFlowActivity
 import com.example.ads.rewarded.CoinManager

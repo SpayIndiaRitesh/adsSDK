@@ -1,10 +1,10 @@
-package com.example.adssdkxml.config
+package com.example.ads.config
 
 import android.content.Context
 import com.example.ads.AdsConfig
 import com.example.ads.AdsManager
+import com.example.ads.R
 import com.example.ads.util.AdsLogger
-import com.example.adssdkxml.R
 import com.google.firebase.remoteconfig.ConfigUpdate
 import com.google.firebase.remoteconfig.ConfigUpdateListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
