@@ -128,6 +128,13 @@
             android:layout_marginTop="8dp"
             android:text="🪙 5. Use 4 Coins (useCoins(4))" />
 
+        <Button
+            android:id="@+id/btn_compose_mrec"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:text="📱 6. Compose Medium Rectangle Ad Screen" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

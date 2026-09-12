@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ads.AdsManager
 import com.example.ads.util.AdsLogger
+import com.example.adssdkxml.banner.ComposeMediumRectangleActivity
 import com.example.adssdkxml.banner.MediumRectangleFlowActivity
 import com.example.adssdkxml.config.AdsRemoteConfigManager
 import com.example.adssdkxml.databinding.ActivityMainBinding
@@ -77,6 +78,12 @@ class MainActivity : AppCompatActivity() {
                 val currentCoins = CoinManager.getCoins(this)
                 Toast.makeText(this, "❌ Insufficient Coins! You have $currentCoins (Need 4)", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // 6. Compose Medium Rectangle Ad Screen
+        binding.btnComposeMrec.setOnClickListener {
+            val intent = Intent(this, ComposeMediumRectangleActivity::class.java)
+            startActivity(intent)
         }
 
         // Premium Switch Toggle

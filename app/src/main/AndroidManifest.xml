@@ -54,6 +54,12 @@
             android:exported="false"
             android:label="Native 3-Level Flow" />
 
+        <!-- Screen demonstrating Medium Rectangle (300x250) Banner Ad in Jetpack Compose -->
+        <activity
+            android:name=".banner.ComposeMediumRectangleActivity"
+            android:exported="false"
+            android:label="Compose Medium Rectangle Ad" />
+
     </application>
 
 </manifest>
